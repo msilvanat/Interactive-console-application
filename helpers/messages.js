@@ -1,28 +1,28 @@
 require('colors');
 
-const mostrarMenu = () => {
+const showMenu = () => {
 
     return new Promise( resolve => {
         console.clear();
         console.log('=============='.green);
-        console.log(' Seleccione una opción'.green);
+        console.log(' Choose an option'.green);
         console.log('=============\n'.green);
 
 
-        console.log(`${'1.'.green} Crear tarea`);
-        console.log(`${'2.'.green} Listar tareas`);
-        console.log(`${'3.'.green} Listar tareas completadas`);
-        console.log(`${'4.'.green} Listar tareas pendientes`);
-        console.log(`${'5.'.green} Completar tarea(s)`);
-        console.log(`${'6.'.green} Borrar tareas`);
-        console.log(`${'0.'.green} Salir\n`);
+        console.log(`${'1.'.green} Create task`);
+        console.log(`${'2.'.green} List tasks`);
+        console.log(`${'3.'.green} List complete tasks`);
+        console.log(`${'4.'.green} List pending tasks`);
+        console.log(`${'5.'.green} Complete task(s)`);
+        console.log(`${'6.'.green} Delete tasks`);
+        console.log(`${'0.'.green} Go out\n`);
 
         const readline = require('readline').createInterface({  
             input: process.stdin,
             output: process.stdout
         });
 
-        readline.question('Seleccione una opcion:', (opt) => {
+        readline.question('Choose an option:', (opt) => {
             readline.close();
             resolve(opt);
         })
@@ -31,7 +31,7 @@ const mostrarMenu = () => {
 }
 
 
-const pausa = () => {
+const stop = () => {
     return new Promise( resolve => {
 
         const readline = require('readline').createInterface({
@@ -39,7 +39,7 @@ const pausa = () => {
             output: process.stdout
         });
     
-        readline.question(`\nPresione ${'ENTER'.green} para continuar\n`, (opt) => {
+        readline.question(`\nPress ${'ENTER'.green} to continue\n`, (opt) => {
             readline.close();
             resolve();
         })
@@ -50,7 +50,7 @@ const pausa = () => {
 
 
 module.exports = {
-    mostrarMenu,
-    pausa
+    showMenu,
+    stop
 
 }

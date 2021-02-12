@@ -1,70 +1,70 @@
-require('colors'); //primero va la importacion de paquetes de terceros, luego las nuestras
+require('colors'); // First comes the import of third-party packages, then ours
 
-const { guardarDB, leerDB } = require('./helpers/guardarArchivo');
+const { saveDB, readDB } = require('./helpers/saveFile');
 const { inquirerMenu,
-    pausa,
-    leerInput,
-    listadoTareasBorrar,
-    confirmar,
-    mostrarListadoChecklist
+    stop,
+    readInput,
+    listTasksDelete,
+    confirm,
+    showListChecklist
 } = require('./helpers/inquirer');
 
-const Tareas = require('./models/tareas');
+const Tasks = require('./models/tasks');
 
 
 const main = async () => {
     let opt = '';
 
-    const tareas = new Tareas();
+    const tasks = new Tasks();
 
-    const tareasDB = leerDB();
+    const tasksDB = readDB();
 
-    if ( tareasDB ) { // CARGAR TAREAS
-        tareas.cargarTareasFromArray( tareasDB );
+    if ( tasksDB ) { // Load tasks
+        tasks.loadTasksFromArray( tasksDB );
     }
 
     do {
-        //Imprimir el menu
+        //Print the menu
         opt = await inquirerMenu();
 
         switch (opt) {
             case '1':
-                const desc = await leerInput('Descripcion:');
-                tareas.crearTarea( desc );
+                const desc = await readInput('Descripction:');
+                tasks.createTask( desc );
                 break;
 
             case '2':
-                tareas.listadoCompleto();
+                tasks.completeList();
                 break;
 
             case '3':
-                tareas.listarPendientesCompletadas(true);
+                tasks.listPendingCompletes(true);
                 break;
 
             case '4':
-                tareas.listarPendientesCompletadas(false);
+                tasks.listPendingCompletes(false);
                 break;
 
                 case '5':
-                    const ids = await mostrarListadoChecklist( tareas.listadoArr );
-                    tareas.toggleCompletadas( ids );
+                    const ids = await showListChecklist( tasks.listArr );
+                    tasks.toggleComplete( ids );
                 break;
 
-                case '6': // Borrar
-                const id = await listadoTareasBorrar( tareas.listadoArr );
+                case '6': // Delete
+                const id = await listTasksDelete( tasks.listArr );
                 if ( id !== '0' ) {
-                    const ok = await confirmar('¿Está seguro?');
+                    const ok = await confirm('¿Are you sure?');
                     if ( ok ) {
-                        tareas.borrarTarea( id );
-                        console.log('Tarea borrada');
+                        tasks.deleteTask( id );
+                        console.log('The task was delete');
                     }
                 }
             break;
         }
 
-        guardarDB(tareas.listadoArr);
+        saveDB(tasks.listArr);
 
-        await pausa();
+        await stop();
 
 
     } while (opt !== '0');
