@@ -104,7 +104,7 @@ const listTasksDelete = async (tasks = []) => {
         {
             type: 'list',
             name: 'id',
-            message: 'Borrar',
+            message: 'Delete',
             choices
 
         }
