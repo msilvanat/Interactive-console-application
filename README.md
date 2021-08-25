@@ -40,7 +40,7 @@ npm i colors inquirer uuid
 
 3.- To run the api, run this on the terminal
 ```
-node app.js 
+npm run start
 ```
 
 
